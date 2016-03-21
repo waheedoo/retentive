@@ -1,0 +1,28 @@
+{
+  "name": "retentive-api",
+  "description": "API for Retentive",
+  "keywords": ["yii2", "api"],
+  "homepage": "https://github.com/waheedoo/retentive",
+  "type": "api project",
+  "minimum-stability": "dev",
+  "license": "None",
+  "authors": [
+    {
+      "name": "Waheed Al Khateeb",
+      "email": "waheed.alkhateeb@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": "*",
+    "filsh/yii2-oauth2-server": "2.0.0"
+  },
+  "extra": {
+    "writable": [
+      "application/api/runtime"
+    ],
+    "executable": [
+      "application/api/yii"
+    ]
+  }
+}
