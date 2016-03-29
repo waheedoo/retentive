@@ -62,6 +62,7 @@ class OAuth2AccessFilter extends \yii\base\ActionFilter
 //				echo $oauthResponse->getParameter('error_description').'<br>';
 //				exit;
 				$error = $oauthResponse->getParameter('error_description') ?: 'You are not allowed to perform this action.';
+				//$error = 'newman!';
 				throw new ForbiddenHttpException(Yii::t('yii', $error));
 			}
 

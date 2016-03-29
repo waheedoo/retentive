@@ -17,6 +17,15 @@ return [
 					'extraPatterns' => [
 						'GET custom' => 'custom',
 						'GET protected' => 'protected',
+						'GET newman/<id:\d+|me>'	=> 'newman',
+						'GET administrator' => 'administrator'
+					],
+				],
+				[
+					'class' => 'yii\rest\UrlRule',
+					'controller' => 'v1/user',
+					'extraPatterns' => [
+						'POST register'	=> 'register'
 					],
 				],
 			]

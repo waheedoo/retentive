@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 $config =  [
 	'version' => "0.0.1",
     'basePath' => dirname(__DIR__),
-	'timeZone' => 'Africa/Nairobi',
+	//'timeZone' => 'UTC',
 
 	'vendorPath' => dirname(dirname(dirname(__DIR__))) . '/vendor',
 
@@ -21,6 +21,9 @@ $config =  [
 			],
 			'storageMap' => [
 				'user_credentials' => 'api\models\User'
+			],
+			'controllerMap' => [
+				'default'	=> 'api\modules\filsh\controllers\DefaultController'
 			],
 			'grantTypes' => [
 				'client_credentials' => [
