@@ -82,6 +82,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
             'repeatPasswordRequired' => ['password_repeat', 'required', 'on' => ['register', 'create']],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
 
+            //name required:
+            [['firstname', 'lastname'], 'required', 'on' => ['register', 'create']],
+            [['firstname', 'lastname'], 'string', 'max' => 25],
+            [['password_reset_token'], 'string', 'max' => 255],
+
             ['status', 'default', 'value' => self::STATUS_ACTIVE], //user is active by default
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 
@@ -94,10 +99,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
     /** @inheritdoc */
     public function scenarios()
     {
+        //list all the fields that will be accepted and saved from the client
         return [
-            'register' => ['email', 'password', 'password_repeat'],
-            'login'    => ['email'],
-            'create'   => ['email', 'password', 'password_repeat'],
+            'register' => ['email', 'password', 'password_repeat', 'password_reset_token', 'firstname', 'lastname'],
+            'login'    => ['email', 'password'],
+            'create'   => ['email', 'password', 'password_repeat', 'firstname', 'lastname'],
             'update'   => ['email', 'password']
         ];
     }
@@ -165,7 +171,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
         if (empty($token)) {
             return false;
         }
-        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        $expire = Yii::$app->params['user']['passwordResetTokenExpire'];
         $parts = explode('_', $token);
         $timestamp = (int) end($parts);
         return $timestamp + $expire >= time();

@@ -10,22 +10,32 @@ return [
 		'urlManager' => [
 			'enablePrettyUrl' => true,
 			'rules' => [
-				'POST /oauth2/<action:\w+>' => 'oauth2/default/<action>',
+				// you can add all the actions that are related to auth to this controller (default)
+				//e.g: resetPassword, login, logout
+				//'POST /oauth2/<action:\w+>' => 'oauth2/default/<action>',
+				'POST /oauth2/login' => 'oauth2/default/login',
+
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/product',
 					'extraPatterns' => [
 						'GET custom' => 'custom',
 						'GET protected' => 'protected',
-						'GET newman/<id:\d+|me>'	=> 'newman',
+						// an example about endpoint that can be accessed only by a user with role=admin
 						'GET administrator' => 'administrator'
 					],
 				],
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/user',
+					'except' => ['delete', 'create'], //403 forbidden when requesting these actions
 					'extraPatterns' => [
-						'POST register'	=> 'register'
+						'POST register'	=> 'register',
+						'GET <id:\d+|me>'	 => 'view',
+						'PUT <id:\d+|me>'	=> 'update',
+						'POST sendResetPassword' => 'sendResetPassword',
+						'POST  resetPassword' => 'resetPassword',
+
 					],
 				],
 			]

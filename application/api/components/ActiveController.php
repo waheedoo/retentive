@@ -13,4 +13,7 @@ namespace api\components;
 class ActiveController extends \yii\rest\ActiveController
 {
 	use \api\components\traits\ControllersCommonTrait;
+
+	//here we can list all the common methods we use frequently
+	//e.g: getCurrentUser
 }

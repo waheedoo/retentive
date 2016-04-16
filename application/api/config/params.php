@@ -6,4 +6,7 @@ return [
 		'application/xml' => yii\web\Response::FORMAT_XML,
 		'text/html' => yii\web\Response::FORMAT_HTML,
 	],
+	'user' => [
+		'passwordResetTokenExpire' => 86400, // 24 hours
+	]
 ];
