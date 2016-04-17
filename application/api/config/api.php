@@ -13,7 +13,9 @@ return [
 				// you can add all the actions that are related to auth to this controller (default)
 				//e.g: resetPassword, login, logout
 				//'POST /oauth2/<action:\w+>' => 'oauth2/default/<action>',
-				'POST /oauth2/login' => 'oauth2/default/login',
+				'POST /oauth2/login' 	=> 'oauth2/default/login',
+				'GET  /oauth2/tokenInfo'=> 'oauth2/default/token',
+				'DELETE /oauth2/logout' => 'oauth2/default/logout',
 
 				[
 					'class' => 'yii\rest\UrlRule',
