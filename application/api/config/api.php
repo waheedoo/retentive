@@ -62,6 +62,14 @@ return [
 					$content_neg->response = $response;
 					$content_neg->formats = Yii::$app->params['formats'];
 					$content_neg->negotiate();
+
+					//set response output for 404 scenarios:
+					if($response->statusCode == '404') {
+						$response->data = [
+							'error' => 'Not found!',
+							'code'	=> '404'
+						];
+					}
 				}
 				if ($response->data !== null && Yii::$app->request->get('suppress_response_code')) {
 					$response->data = [
