@@ -36,24 +36,24 @@ class ProductController extends \api\components\ActiveController
 					'delete',
 					'newman',
 				],
-				'roles' => [User::ROLE_USER],
+				'roles' => ['@', User::ROLE_USER],
 			],
 			[
 				'allow' => true,
 				'actions' => ['custom'],
-				'roles' => [User::ROLE_USER],
+				'roles' => ['@', User::ROLE_USER],
 				'scopes' => ['custom'],
 			],
 			[
 				'allow' => true,
 				'actions' => ['protected'],
-				'roles' => [User::ROLE_USER],
+				'roles' => ['@', User::ROLE_USER],
 				'scopes' => ['protected'],
 			],
 			[
 				'allow' => true,
 				'actions' => ['administrator'],
-				'roles' => [User::ROLE_ADMIN],
+				'roles' => ['@', User::ROLE_ADMIN],
 			],
 		];
 	}
