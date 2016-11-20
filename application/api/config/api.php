@@ -48,10 +48,12 @@ return [
 			]
 		],
 		'response' => [
-			'class' => 'yii\web\Response',
-			'formatters' => [
-				yii\web\Response::FORMAT_HTML => '\api\components\HtmlResponseFormatter',
-			],
+//			'class' => 'yii\web\Response',
+//			'formatters' => [
+//				yii\web\Response::FORMAT_HTML => '\api\components\HtmlResponseFormatter',
+//			],
+			'format' => yii\web\Response::FORMAT_JSON,
+			'charset' => 'UTF-8',
 			'on beforeSend' => function (\yii\base\Event $event) {
 				/** @var \yii\web\Response $response */
 				$response = $event->sender;
@@ -83,7 +85,7 @@ return [
 		'user' => [
 			'identityClass' => 'api\models\User',
 			'loginUrl' => null,
-			'enableSession' => false
+			//'enableSession' => false
         ],
     ],
     'params' => [],

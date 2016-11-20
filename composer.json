@@ -17,7 +17,7 @@
     "ext-apc": "*",
     "ext-memcached": "*",
     "yiisoft/yii2": "*",
-    "filsh/yii2-oauth2-server": "2.0.0"
+    "filsh/yii2-oauth2-server": "2.0.1.x-dev@dev"
   },
   "require-div": {
     "yiisoft/yii2-codeception": "*"

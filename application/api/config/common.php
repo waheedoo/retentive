@@ -8,7 +8,7 @@ $config =  [
 
 	'vendorPath' => dirname(dirname(dirname(__DIR__))) . '/vendor',
 
-	'bootstrap' => ['log'],
+	'bootstrap' => ['log', 'oauth2'],
     'modules' => [
         'gii' => [ //for development only
             'class' => 'yii\gii\Module',
@@ -26,17 +26,17 @@ $config =  [
 				'default'	=> 'api\modules\filsh\controllers\DefaultController'
 			],
 			'grantTypes' => [
-				'client_credentials' => [
-					'class' => 'OAuth2\GrantType\ClientCredentials',
-					'allow_public_clients' => false
-				],
+//				'client_credentials' => [
+//					'class' => 'OAuth2\GrantType\ClientCredentials',
+//					'allow_public_clients' => false
+//				],
 				'user_credentials' => [
 					'class' => 'OAuth2\GrantType\UserCredentials'
 				],
 				'refresh_token' => [
-					'class' => 'OAuth2\GrantType\RefreshToken',
-					'always_issue_new_refresh_token' => true
-				]
+              		'class' => 'OAuth2\GrantType\RefreshToken',
+              		'always_issue_new_refresh_token' => true
+         		]
 			],
 		],
 		'v1' => [
@@ -48,8 +48,8 @@ $config =  [
 		'db' => [
 			'class' => 'yii\db\Connection',
 			'dsn' => 'mysql:host=127.0.0.1;dbname=retentive',
-			'username' => 'root',
-			'password' => '',
+			'username' => 'homestead',
+			'password' => 'secret',
 			'charset' => 'utf8',
 		],
 		'authManager' => [

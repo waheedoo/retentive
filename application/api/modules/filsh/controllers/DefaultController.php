@@ -4,7 +4,7 @@ namespace api\modules\filsh\controllers;
 
 use api\common\models\UserLogin;
 use api\models\User;
-use filsh\yii2\oauth2server\controllers\DefaultController as BaseDefaultController;
+use filsh\yii2\oauth2server\controllers\RestController as BaseDefaultController;
 use filsh\yii2\oauth2server\models\OauthAccessTokens;
 
 class DefaultController extends BaseDefaultController
