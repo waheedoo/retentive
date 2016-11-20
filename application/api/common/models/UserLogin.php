@@ -33,7 +33,7 @@ class UserLogin extends \api\components\db\ActiveRecord
         if ($insert) {
             //use  INET_NTOA() to get the ip again:
             $this->setAttribute('ip',  new Expression('INET_ATON("'.\Yii::$app->request->userIP.'")'));
-            $this->setAttribute('timestamp', new Expression('NOW()'));
+            $this->setAttribute('timestamp', time());
         }
 
         return parent::beforeSave($insert);

@@ -48,8 +48,8 @@ $config =  [
 		'db' => [
 			'class' => 'yii\db\Connection',
 			'dsn' => 'mysql:host=127.0.0.1;dbname=retentive',
-			'username' => 'root',
-			'password' => '',
+			'username' => 'homestead',
+			'password' => 'secret',
 			'charset' => 'utf8',
 		],
 		'authManager' => [
