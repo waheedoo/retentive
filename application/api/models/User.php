@@ -75,11 +75,11 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
             'emailTrim'     => ['email', 'trim'],
 
             // password rules
-            'passwordRequired' => ['password', 'required', 'on' => ['register', 'create']],
-            'passwordLength'   => ['password', 'string', 'min' => 6, 'on' => ['register', 'create']],
+            'passwordRequired' => ['password', 'required', 'on' => ['register', 'create', 'reset']],
+            'passwordLength'   => ['password', 'string', 'min' => 6, 'on' => ['register', 'create', 'reset']],
 
             // password repeat
-            'repeatPasswordRequired' => ['password_repeat', 'required', 'on' => ['register', 'create']],
+            'repeatPasswordRequired' => ['password_repeat', 'required', 'on' => ['register', 'create', 'reset']],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Passwords don't match" ],
 
             //name required:
@@ -99,13 +99,15 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
     /** @inheritdoc */
     public function scenarios()
     {
+        $scenarios = parent::scenarios();
         //list all the fields that will be accepted and saved from the client
-        return [
-            'register' => ['email', 'password', 'password_repeat', 'password_reset_token', 'firstname', 'lastname'],
-            'login'    => ['email', 'password'],
-            'create'   => ['email', 'password', 'password_repeat', 'firstname', 'lastname'],
-            'update'   => ['email', 'password']
-        ];
+        $scenarios['register'] = ['email', 'password', 'password_repeat', 'password_reset_token', 'firstname', 'lastname'];
+        $scenarios['login']    = ['email', 'password'];
+        $scenarios['create']   = ['email', 'password', 'password_repeat', 'firstname', 'lastname'];
+        $scenarios['update']   = ['email', 'password'];
+        $scenarios['reset']    = ['password', 'password_repeat'];
+
+        return $scenarios;
     }
 
     /**
@@ -134,7 +136,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
     /**
      * Finds user by username
      *
-     * @param string $username
+     * @param string $email
      * @return static|null
      */
     public static function findByEmail($email)
@@ -244,6 +246,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
     public function generatePasswordResetToken()
     {
         $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+        $this->save(false);
     }
 
     /**
@@ -252,6 +255,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface, \OAuth2\S
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+        $this->save(false);
     }
 
 	public function checkUserCredentials($username, $password)

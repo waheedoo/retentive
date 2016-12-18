@@ -3,16 +3,16 @@ Yii::setAlias('api', dirname(__DIR__));
 $params = require(__DIR__ . '/params.php');
 $config =  [
 	'version' => "0.0.1",
-    'basePath' => dirname(__DIR__),
+	'basePath' => dirname(__DIR__),
 	//'timeZone' => 'UTC',
 
 	'vendorPath' => dirname(dirname(dirname(__DIR__))) . '/vendor',
 
 	'bootstrap' => ['log'],
-    'modules' => [
-        'gii' => [ //for development only
-            'class' => 'yii\gii\Module',
-        ],
+	'modules' => [
+		'gii' => [ //for development only
+			'class' => 'yii\gii\Module',
+		],
 		'oauth2' => [
 			'class' => 'filsh\yii2\oauth2server\Module',
 			'options' => [
@@ -44,28 +44,28 @@ $config =  [
 		],
 
 	],
-    'components' => [
+	'components' => [
 		'db' => [
 			'class' => 'yii\db\Connection',
-			'dsn' => 'mysql:host=127.0.0.1;dbname=retentive_test_db',
-			'username' => 'root',
-			'password' => '',
+			'dsn' => 'mysql:host=127.0.0.1;dbname=retentive-test',
+			'username' => 'homestead',
+			'password' => 'secret',
 			'charset' => 'utf8',
 		],
 		'authManager' => [
 			'class' => 'yii\rbac\DbManager',
 		],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-    ],
-    'params' => $params,
+		'log' => [
+			'traceLevel' => YII_DEBUG ? 3 : 0,
+			'targets' => [
+				[
+					'class' => 'yii\log\FileTarget',
+					'levels' => ['error', 'warning'],
+				],
+			],
+		],
+	],
+	'params' => $params,
 ];
 
 /*

@@ -12,6 +12,10 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+#config:
+    # the entry script URL (without host info) for functional and acceptance tests
+    # PLEASE ADJUST IT TO THE ACTUAL ENTRY SCRIPT URL
+    #test_entry_url: /rest/web/index-test.php
 modules:
     config:
         Db:

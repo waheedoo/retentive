@@ -17,6 +17,7 @@
     "ext-apc": "*",
     "ext-memcached": "*",
     "yiisoft/yii2": "*",
+    "yiisoft/yii2-swiftmailer": "~2.0.0",
     "bshaffer/oauth2-server-php": "~1.8"
   },
   "require-div": {

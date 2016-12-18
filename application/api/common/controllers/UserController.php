@@ -33,7 +33,7 @@ class UserController extends \api\components\ActiveController
         return [
             [
                 'allow'		=> true,
-                'actions'	=> ['anonymous'],
+                'actions'	=> ['anonymous', 'register', 'forgotpassword', 'resetpassword'],
                 'roles' 	=> ['?'],
             ],
             [
@@ -133,7 +133,73 @@ class UserController extends \api\components\ActiveController
 
     public function actionUpdate()
     {
-
+        $user = Yii::$app->user->identity;
+        $response = Yii::$app->getResponse();
+        //@todo
+        //get the new values to be updated, and then save the changes, and return the new data
+        return ['test' => 1];
     }
 
+    public function actionForgotpassword()
+    {
+        $response = Yii::$app->getResponse();
+        $request = Yii::$app->request;
+        if($request->post('email')) {
+            $email = $request->post('email');
+            $user = User::findByEmail($email);
+            if($user instanceof User) {
+                $user->generatePasswordResetToken();
+                $link = $url = Url::toRoute(['v1/users/resetPassword', 'resetToken' => $user->password_reset_token]);
+                Yii::$app->mailer->compose()
+                    ->setFrom('noreply@retentive.app')
+                    ->setTo($user->email)
+                    ->setSubject(Yii::t('api', 'Reset Password'))
+                    ->setTextBody('please click on the link to reset your password: '.$link)
+                    ->setHtmlBody('<b>Hello!</b><br> please click on the link to reset your password: '.$link)
+                    ->send();
+                $response->setStatusCode(200);
+                $response->data = ['message' => Yii::t('api', 'Reset password link sent!')];
+            }
+            else {
+                $response->setStatusCode(404);
+                $response->data = ['message' => Yii::t('api', "Email doesn't exist")];
+            }
+        } else {
+            $response->setStatusCode(400);
+            $response->data = ['message' => Yii::t('api', 'Missing parameters')];
+        }
+
+        return $response;
+    }
+
+    public function actionResetpassword()
+    {
+        $response = Yii::$app->getResponse();
+        $request = Yii::$app->request;
+        $resetToken = $request->get('resetToken');
+        $password = $request->post('password');
+        $passwordRepeat = $request->post('password_repeat');
+        if($resetToken && $password && $passwordRepeat) {
+            $user = User::findByPasswordResetToken($resetToken);
+            if($user instanceof User) {
+                $user->password = $password;
+                $user->password_repeat = $passwordRepeat;
+                $user->scenario = 'reset';
+                if($user->save()) {
+                    $user->removePasswordResetToken();
+                    $response->setStatusCode(200);
+                    $response->data = ['message' => Yii::t('api', 'password has been reset successfully!')];
+                } else {
+                    $response->setStatusCode(400);
+                    $response->data = ['errors' => $user->getErrors()];
+                }
+            } else {
+                $response->setStatusCode(400);
+                $response->data = ['message' => Yii::t('api', 'Invalid link!')];
+            }
+        } else {
+            $response->setStatusCode(400);
+            $response->data = ['message' => Yii::t('api', 'Missing parameters')];
+        }
+    }
 }

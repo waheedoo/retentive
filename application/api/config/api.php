@@ -4,7 +4,7 @@ return [
 	'name' => '',
 
     'controllerNamespace' => 'api\controllers',
-	'defaultRoute' => 'product',
+	'defaultRoute' => 'user',
 
     'components' => [
 		'urlManager' => [
@@ -20,6 +20,7 @@ return [
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/product',
+					//'pluralize' => false,
 					'extraPatterns' => [
 						'GET custom' => 'custom',
 						'GET protected' => 'protected',
@@ -30,15 +31,17 @@ return [
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'v1/user',
-					'except' => ['delete', 'create'], //403 forbidden when requesting these actions
-					'extraPatterns' => [
-						'POST register'	=> 'register',
-						'GET <id:\d+|me>'	 => 'view',
-						'PUT <id:\d+|me>'	=> 'update',
-						'POST sendResetPassword' => 'sendResetPassword',
-						'POST  resetPassword' => 'resetPassword',
-
-					],
+//					'except' => ['delete', 'create'], //403 forbidden when requesting these actions
+//					'pluralize' => false,
+//					'only' => ['register', 'update', 'view','forgotpassword', 'resetPassword'], //list only the accessible actions
+//					'extraPatterns' => [
+//						'POST register'	=> 'register',
+//						'GET <id:\d+|me>'	 => 'view',
+//						'PUT update'	=> 'update',
+//						'POST forgotpassword' => 'forgot-password',
+//						'POST  resetPassword' => 'resetPassword',
+//
+//					],
 				],
 			]
 		],
@@ -48,6 +51,8 @@ return [
 			]
 		],
 		'response' => [
+			'format' => yii\web\Response::FORMAT_JSON,
+			'charset' => 'UTF-8',
 			'class' => 'yii\web\Response',
 			'formatters' => [
 				yii\web\Response::FORMAT_HTML => '\api\components\HtmlResponseFormatter',
@@ -85,6 +90,16 @@ return [
 			'loginUrl' => null,
 			'enableSession' => false
         ],
+		'mailer' => [
+			'class' => 'yii\swiftmailer\Mailer',
+		],
+		'i18n' => [
+			'translations' => [
+				'*' => [
+					'class' => 'yii\i18n\PhpMessageSource'
+				],
+			],
+		],
     ],
     'params' => [],
 ];
